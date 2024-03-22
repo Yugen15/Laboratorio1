@@ -7,6 +7,6 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $status = $_REQUEST["#chStatus"];
         $descrip = $_REQUEST["txtDescription"];
         
-        //Hola Jos muak
+        
     }
 }
