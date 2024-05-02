@@ -18,13 +18,13 @@ class DAO{
 
     public function get(){
 
-        $sql = "select * productos";
+        $sql = "select from * productos";
         $this->conectar();
         $resultado = $this->con->query($sql);
         //Armar una tabla en HTML como resultado de este metodo
 
         $html = "<table id='tabla' class='table table-striped table-dark'>";
-        $html .= "<thead><tr><th>ID</th><th>USUARIO</th><th>CONTRASEÑA</th><th>NIVEL</th><th>ACCIONES</th></tr></thead>";
+        $html .= "<thead><tr><th>ID P</th><th>ID C</th><th>NOMBRE</th><th>COSTO</th><th>PRECIO</th><th>STOCK</th><th>ACCIONES</th></tr></thead>";
         $html .= "<tbody>";
         while($fila=mysqli_fetch_assoc($resultado)){
             $html .= "<tr>";
