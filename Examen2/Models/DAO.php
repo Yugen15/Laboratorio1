@@ -18,13 +18,13 @@ class DAO{
 
     public function get(){
 
-        $sql = "select from * productos";
+        $sql = "select * productos";
         $this->conectar();
         $resultado = $this->con->query($sql);
         //Armar una tabla en HTML como resultado de este metodo
 
         $html = "<table id='tabla' class='table table-striped table-dark'>";
-        $html .= "<thead><tr><th>ID P</th><th>ID C</th><th>NOMBRE</th><th>COSTO</th><th>PRECIO</th><th>STOCK</th><th>ACCIONES</th></tr></thead>";
+        $html .= "<thead><tr><th>ID</th><th>USUARIO</th><th>CONTRASEÑA</th><th>NIVEL</th><th>ACCIONES</th></tr></thead>";
         $html .= "<tbody>";
         while($fila=mysqli_fetch_assoc($resultado)){
             $html .= "<tr>";
@@ -46,5 +46,32 @@ class DAO{
         $this->con->close();
         return $html;
     
+    }
+
+    public function agregar(Productos $prod){
+        $this->conectar();
+        //para consultas preparadas, el primer paso es crear el statement (consulta preparada)
+        $statement = 
+        $this->con->prepare("INSERT into usuarios(nombre, costo, precio, stock, idcategoria) values(?,?,?,?)");
+       
+        //el 2° paso es establecer parametros (los valores de los simbolos ?)
+        $nombre = $prod->getNombre();
+        $costo = $prod->getCosto();
+        $precio = $prod->getPrecio();
+        $stock = $prod->getStock();
+        $idCa = $prod->getIdCatego();
+        //establezco parametros
+        $statement->bind_param("sddii",$nombre,$costo,$precio,$stock,$idCa);
+
+        if($statement->execute()){
+            $statement->close();
+            $this->desconectar();
+            return true;
+        }else{
+            $statement->close();
+            $this->desconectar();
+            return false;
+        }
+
     }
 }
